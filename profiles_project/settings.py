@@ -24,7 +24,7 @@ SECRET_KEY = 's(^ac6+$keq1jp46z-bdx6q%2j_wncz!=x_p9az3xjta9hw&m-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['djalil-capsule.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['djalil-capsule.herokuapp.com',]
 
 # Application definition
 
@@ -129,7 +129,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'statics')
 STATIC_URL = '/statics/'
 MEDIA_URL = '/media/'
 
