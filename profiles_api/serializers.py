@@ -13,5 +13,3 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'name',  'date_of_creation']
 
 
-class PasswordSerializer (PasswordResetSerializer):
-    password_reset_form_class = ResetPasswordForm

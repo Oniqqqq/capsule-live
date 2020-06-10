@@ -145,7 +145,6 @@ AUTH_USER_MODEL = 'profiles_api.UserProfile'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'profiles_api.serializers.UserSerializer',
-    'PASSWORD_RESET_SERIALIZER': 'profiles_api.serializers.PasswordSerializer',
 }
 
 
@@ -165,7 +164,7 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 
 SITE_ID = 1
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
