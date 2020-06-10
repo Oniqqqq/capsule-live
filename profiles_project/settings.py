@@ -141,11 +141,13 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'statics/media')
 
 AUTH_USER_MODEL = 'profiles_api.UserProfile'
-'''
+
+
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'profiles_api.serializers.UserSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'profiles_api.serializers.PasswordSerializer',
 }
-'''
+
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'name'
 ACCOUNT_EMAIL_REQUIRED = True
