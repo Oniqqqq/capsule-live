@@ -25,7 +25,7 @@ SECRET_KEY = 's(^ac6+$keq1jp46z-bdx6q%2j_wncz!=x_p9az3xjta9hw&m-'
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', '.herokussl.com']
 
 # Application definition
 
@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'profiles_api',
     'rest_auth',
     'django.contrib.sites',
     'allauth',
@@ -47,6 +46,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'allauth.socialaccount.providers.google',
     'storages',
+    'profiles_api',
 
 ]
 
