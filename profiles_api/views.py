@@ -4,7 +4,7 @@ from rest_framework.permissions import (AllowAny)
 from allauth.account.models import EmailAddress
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.response import Response
-
+from rest_framework import status
 
 class ResendEmailVerificationSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -24,6 +24,6 @@ class ResendEmailVerification(GenericAPIView):
             email_address = EmailAddress.objects.get(email__exact=email, verified=False)
             email_address.send_confirmation(self.request, True)
         except EmailAddress.DoesNotExist:
-            pass
+            return Response({'message': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
 
         return Response({'detail': _('Verification e-mail sent.')})
