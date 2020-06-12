@@ -24,6 +24,6 @@ class ResendEmailVerification(GenericAPIView):
             email_address = EmailAddress.objects.get(email__exact=email, verified=False)
             email_address.send_confirmation(self.request, True)
         except EmailAddress.DoesNotExist:
-            return Response({'message': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
+            pass
 
         return Response({'detail': _('Verification e-mail sent.')})
