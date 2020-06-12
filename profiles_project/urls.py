@@ -8,6 +8,7 @@ from django.urls import path, include
 from django.conf.urls import url
 from allauth.account.views import confirm_email, password_reset
 from django.conf import settings
+from profiles_api.views import EmailConfirmation
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,6 +17,7 @@ urlpatterns = [
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^account/', include('allauth.urls')),
+    url(r'^/sendconfirmationemail/', EmailConfirmation.as_view(), name='send-email-confirmation'),
     url(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
 ]
 
