@@ -11,3 +11,11 @@ from rest_framework.exceptions import ValidationError
 
 from rest_auth.models import TokenModel
 from rest_auth.utils import import_callable
+
+from profiles_api.models import UserProfile
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserProfile
+        fields = ['id', 'email', 'first_name', 'last_name', 'spouse_name', 'date_of_birth']
