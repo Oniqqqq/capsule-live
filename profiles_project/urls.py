@@ -13,8 +13,6 @@ from profiles_api import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('profiles_api.urls')),
-    path('rest-auth/resend-verification-email/', views.ResendEmailVerification.as_view(),
-         name='rest_resend_verification_email'),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
