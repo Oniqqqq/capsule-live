@@ -163,8 +163,4 @@ class JWTSerializer(serializers.Serializer):
         user_data = JWTUserDetailsSerializer(obj['user'], context=self.context).data
         return user_data
 
-from rest_auth.serializers import PasswordResetSerializer
-from allauth.account.forms import ResetPasswordForm
 
-class PasswordSerializer (PasswordResetSerializer):
-    password_reset_form_class = ResetPasswordForm
