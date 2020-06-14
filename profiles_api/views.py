@@ -116,3 +116,19 @@ class LoginView(GenericAPIView):
         return self.get_response()
 
 
+class PasswordResetConfirmView(GenericAPIView):
+
+    serializer_class = PasswordResetConfirmSerializer
+    permission_classes = (AllowAny,)
+
+    @sensitive_post_parameters_m
+    def dispatch(self, *args, **kwargs):
+        return super(PasswordResetConfirmView, self).dispatch(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            {"detail": _("Password has been reset with the new password.")}
+        )

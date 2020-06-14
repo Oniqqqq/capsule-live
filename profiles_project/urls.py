@@ -14,6 +14,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('profiles_api.urls')),
     path('login/', views.LoginView.as_view(), name='rest_login'),
+    path('password/reset/confirm/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
