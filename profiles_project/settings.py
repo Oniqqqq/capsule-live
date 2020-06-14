@@ -145,6 +145,7 @@ AUTH_USER_MODEL = 'profiles_api.UserProfile'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'profiles_api.serializers.UserSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'profiles_api.serializers.PasswordSerializer',
 }
 
 
