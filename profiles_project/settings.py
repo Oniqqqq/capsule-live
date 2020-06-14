@@ -166,13 +166,13 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 SITE_ID = 1
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'postmaster@sandboxdc0becbf67ac476f92f27fc6776b69cc.mailgun.org'
-EMAIL_HOST_PASSWORD = '7b15a67873ea2e3a8cb68d2ad9bce39a-8b34de1b-ae5236b6'
+EMAIL_HOST_USER = 'coachy.dd@gmail.com'
+EMAIL_HOST_PASSWORD = '13371@zL6520'
 
-#SERVER_EMAIL = 'postmaster@sandboxdc0becbf67ac476f92f27fc6776b69cc.mailgun.org'
+SERVER_EMAIL = 'coachy.dd@gmail.com'
 
 
 '''
