@@ -1,11 +1,14 @@
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
-from rest_framework import serializers
+from rest_framework import serializers, generics, filters
 from rest_framework.permissions import (AllowAny)
 from allauth.account.models import EmailAddress
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework import viewsets
+from profiles_api import serializers
+from rest_framework.permissions import IsAuthenticated
 
 
 from django.contrib.auth import (
@@ -114,5 +117,24 @@ class LoginView(GenericAPIView):
 
         self.login()
         return self.get_response()
+
+from profiles_api import models
+
+from profiles_api import serializers
+from rest_framework.decorators import permission_classes
+
+from django.utils import timezone
+
+class CapsuleCreateAPIView(generics.CreateAPIView):
+    queryset = models.Capsule.objects.all()
+    serializer_class = serializers.CapsuleSerializer
+    permission_classes = [AllowAny]
+
+
+'''
+    def perform_create(self, serializer):
+        serializer.is_valid(raise_exception=True)
+        serializer.save(owner=self.request.user)
+'''
 
 

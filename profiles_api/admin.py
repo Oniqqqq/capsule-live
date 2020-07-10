@@ -7,10 +7,11 @@ class CapsuleImageAdmin(admin.StackedInline):
     model = models.CapsuleImage
 
 
+
+
 @admin.register(models.Capsule)
 class CapsuleAdmin(admin.ModelAdmin):
     inlines = [CapsuleImageAdmin]
-    readonly_fields = ('created_on',)
 
     class Meta:
         model = models.Capsule

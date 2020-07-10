@@ -1,4 +1,6 @@
 import datetime
+
+from django.core import cache
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser
@@ -6,6 +8,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
+from django.forms import ValidationError
+
 
 
 class UserProfileManager(BaseUserManager):
@@ -57,16 +61,35 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+from django.conf import settings
+
+def get_deleted_user():
+    return settings.AUTH_USER_MODEL.objects.get_or_create(username='deleted')[0]
+
+
+def cache_key(param, pk):
+    pass
+
+
+
 
 class Capsule(models.Model):
     capsule_name = models.CharField(max_length=255)
     capsule_text = models.TextField(max_length=360, blank=True)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='owner_user', on_delete=models.SET(get_deleted_user), default=1)
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    date_to_open_back = models.DateTimeField(blank=False, null=True)
+    date_to_open = models.DateTimeField(blank=False, null=True)
+    shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user', null=True)
 
-    created_on = models.DateTimeField(auto_now_add=True)
-    date_published = models.DateField(blank=False, null=True)
 
     def __str__(self):
         return self.capsule_name
+
+    def save(self, *args, **kwargs):
+        super(Capsule, self).save(*args, **kwargs)
+
 
 
 class CapsuleImage(models.Model):
@@ -74,5 +97,13 @@ class CapsuleImage(models.Model):
                                     upload_to='media/covers/%Y/%m/%D/')
 
     gallery_capsule = models.ForeignKey(Capsule, related_name='images', on_delete=models.CASCADE)
+
+
+
+
+
+
+
+
 
 
