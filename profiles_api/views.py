@@ -128,7 +128,7 @@ from django.utils import timezone
 class CapsuleCreateAPIView(generics.CreateAPIView):
     queryset = models.Capsule.objects.all()
     serializer_class = serializers.CapsuleSerializer
-    permission_classes = [AllowAny]
+    permission_classes = (IsAuthenticated, )
 
 
 '''
