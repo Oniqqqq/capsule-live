@@ -1,3 +1,7 @@
+import datetime
+from datetime import timedelta
+
+
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
 from rest_framework import serializers, generics, filters
@@ -124,6 +128,7 @@ from profiles_api import serializers
 from rest_framework.decorators import permission_classes
 
 from django.utils import timezone
+from itertools import chain
 
 class CapsuleCreateAPIView(generics.CreateAPIView):
     queryset = models.Capsule.objects.all()
@@ -131,10 +136,25 @@ class CapsuleCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated, )
 
 
-'''
-    def perform_create(self, serializer):
-        serializer.is_valid(raise_exception=True)
-        serializer.save(owner=self.request.user)
-'''
+class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.OpenedCapsuleListSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
+        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__gt=timezone.now())
+
+        return chain(queryset, queryset1)
+
+
+class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.ClosedCapsuleListSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lt=timezone.now())
+        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__lt=timezone.now())
+
+        return chain(queryset, queryset1)
 
 

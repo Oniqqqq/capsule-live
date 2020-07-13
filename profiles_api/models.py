@@ -78,9 +78,9 @@ class Capsule(models.Model):
     capsule_text = models.TextField(max_length=360, blank=True)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='owner_user', on_delete=models.SET(get_deleted_user), default=1)
-    created_on = models.DateTimeField(auto_now_add=True, null=True)
-    date_to_open_back = models.DateTimeField(blank=False, null=True)
-    date_to_open = models.DateTimeField(blank=False, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    date_to_open_back = models.DateTimeField(blank=False)
+    date_to_open = models.DateTimeField(blank=False)
     shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user', null=True)
 
 

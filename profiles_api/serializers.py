@@ -223,19 +223,19 @@ class CapsuleSerializer(serializers.ModelSerializer):
         return gallery_capsule
 
 
-'''
-class SharedToSerializer(serializers.ModelSerializer):
-    #capsule_person = serializers.PrimaryKeyRelatedField(queryset=UserProfile.objects.all(), many=True)
+class OpenedCapsuleListSerializer(serializers.ModelSerializer):
 
-    def validate(self, data):
-        user = self.context['request'].user
-        if user == data:
-            raise serializers.ValidationError('Can not add own profile')
-        return data
+    owner = serializers.ReadOnlyField(source='owner.name')
 
     class Meta:
-        model = models.SharedTo
-        fields = ('shared_to', 'capsule_person', )
-'''
+        model = models.Capsule
+        fields = ('id', 'capsule_name', 'date_to_open', 'owner')
 
 
+class ClosedCapsuleListSerializer(serializers.ModelSerializer):
+
+    owner = serializers.ReadOnlyField(source='owner.name')
+
+    class Meta:
+        model = models.Capsule
+        fields = ('id', 'capsule_name', 'date_to_open', 'owner')
