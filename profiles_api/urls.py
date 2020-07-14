@@ -6,6 +6,7 @@ from django.conf.urls import url
 router = DefaultRouter()
 router.register(r'openedcapsules', views.OpenedCapsuleListViewSet, basename='OpenedListCapsule')
 router.register(r'closedcapsules', views.ClosedCapsuleListViewSet, basename='ClosedListCapsule')
+router.register(r'existuser', views.ExistUser, basename='existuser')
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -5,12 +5,15 @@ from datetime import timedelta
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
 from rest_framework import serializers, generics, filters
+from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, ListModelMixin
 from rest_framework.permissions import (AllowAny)
 from allauth.account.models import EmailAddress
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.viewsets import GenericViewSet
+
 from profiles_api import serializers
 from rest_framework.permissions import IsAuthenticated
 
@@ -127,6 +130,8 @@ from profiles_api import models
 from profiles_api import serializers
 from rest_framework.decorators import permission_classes
 
+from profiles_api.permissions import IsOwner, IsShared
+
 from django.utils import timezone
 from itertools import chain
 
@@ -138,23 +143,35 @@ class CapsuleCreateAPIView(generics.CreateAPIView):
 
 class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.OpenedCapsuleListSerializer
-    permission_classes = (IsAuthenticated, )
-
-    def get_queryset(self):
-        queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
-        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__gt=timezone.now())
-
-        return chain(queryset, queryset1)
-
-
-class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.ClosedCapsuleListSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsOwner, IsShared)
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lt=timezone.now())
         queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__lt=timezone.now())
 
         return chain(queryset, queryset1)
+
+
+class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.ClosedCapsuleListSerializer
+    permission_classes = (IsAuthenticated,IsOwner, IsShared)
+
+    def get_queryset(self):
+        queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gte=timezone.now())
+        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open_gte=timezone.now())
+
+        return chain(queryset, queryset1)
+
+
+class ExistUser(RetrieveModelMixin, CreateModelMixin, ListModelMixin, GenericViewSet):
+    queryset = models.UserProfile.objects.all()
+    serializer_class = serializers.ExistUserSerializer
+    lookup_field = 'name'
+
+    def list(self, request):
+        return Response({'message': 'Hello!', 'user': 'user'})
+
+
+
 
 
