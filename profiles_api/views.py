@@ -158,7 +158,7 @@ class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gte=timezone.now())
-        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open_gte=timezone.now())
+        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__gte=timezone.now())
 
         return chain(queryset, queryset1)
 
