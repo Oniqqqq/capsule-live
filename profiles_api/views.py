@@ -175,8 +175,7 @@ class ExistUser(RetrieveModelMixin, CreateModelMixin, ListModelMixin, GenericVie
 
 class CapsuleDetail(generics.RetrieveAPIView):
     serializer_class = serializers.CapsuleDetailsSerializer
-    permission_classes = (IsAuthenticated, IsOwner | IsShared)
-    authentication_classes = (TokenAuthentication, )
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         queryset = models.Capsule.objects.all()
