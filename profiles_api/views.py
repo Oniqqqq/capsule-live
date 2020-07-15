@@ -143,7 +143,7 @@ class CapsuleCreateAPIView(generics.CreateAPIView):
 
 class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.OpenedCapsuleListSerializer
-    permission_classes = (IsAuthenticated, IsOwner, IsShared)
+    permission_classes = (IsAuthenticated, IsOwner | IsShared)
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lte=timezone.now())
@@ -154,7 +154,7 @@ class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ClosedCapsuleListSerializer
-    permission_classes = (IsAuthenticated, IsOwner, IsShared)
+    permission_classes = (IsAuthenticated, IsOwner | IsShared)
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
@@ -175,7 +175,7 @@ class ExistUser(RetrieveModelMixin, CreateModelMixin, ListModelMixin, GenericVie
 
 class CapsuleDetail(generics.RetrieveAPIView):
     serializer_class = serializers.CapsuleDetailsSerializer
-    permission_classes = (IsAuthenticated, IsOwner, IsShared)
+    permission_classes = (IsAuthenticated, IsOwner | IsShared)
 
     def get_queryset(self):
         queryset = models.Capsule.objects.all()
