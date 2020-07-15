@@ -10,7 +10,7 @@ router.register(r'existuser', views.ExistUser, basename='existuser')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('capsuledetail/<int:pk>', views.CapsuleDetail.as_view(), name='capsuledetail'),
+    path('capsuledetail/<int:pk>/', views.CapsuleDetail.as_view(), name='halo'),
     url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
 
 
