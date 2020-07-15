@@ -178,7 +178,7 @@ class CapsuleDetail(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated, IsOwner, IsShared)
 
     def get_queryset(self):
-        queryset = models.Capsule.objects.filter(date_to_open__lte=timezone.now())
+        queryset = models.Capsule.objects.all()
         return queryset
 
 
