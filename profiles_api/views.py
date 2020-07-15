@@ -1,7 +1,7 @@
 import datetime
 from datetime import timedelta
 
-
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView, get_object_or_404
 from rest_framework import serializers, generics, filters
@@ -176,6 +176,7 @@ class ExistUser(RetrieveModelMixin, CreateModelMixin, ListModelMixin, GenericVie
 class CapsuleDetail(generics.RetrieveAPIView):
     serializer_class = serializers.CapsuleDetailsSerializer
     permission_classes = (IsAuthenticated, IsOwner, IsShared)
+    authentication_classes = (TokenAuthentication,)
 
     def get_queryset(self):
         queryset = models.Capsule.objects.all()
