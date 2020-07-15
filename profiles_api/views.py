@@ -3,7 +3,7 @@ from datetime import timedelta
 
 
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, get_object_or_404
 from rest_framework import serializers, generics, filters
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, ListModelMixin
 from rest_framework.permissions import (AllowAny)
@@ -146,8 +146,8 @@ class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated, IsOwner, IsShared)
 
     def get_queryset(self):
-        queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lt=timezone.now())
-        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__lt=timezone.now())
+        queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lte=timezone.now())
+        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__lte=timezone.now())
 
         return chain(queryset, queryset1)
 
@@ -157,8 +157,8 @@ class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated, IsOwner, IsShared)
 
     def get_queryset(self):
-        queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gte=timezone.now())
-        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__gte=timezone.now())
+        queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
+        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__gt=timezone.now())
 
         return chain(queryset, queryset1)
 
@@ -174,8 +174,17 @@ class ExistUser(RetrieveModelMixin, CreateModelMixin, ListModelMixin, GenericVie
 
 
 class CapsuleDetail(generics.RetrieveAPIView):
-    queryset = models.Capsule.objects.all()
     serializer_class = serializers.CapsuleDetailsSerializer
+    permission_classes = (IsAuthenticated, IsOwner, IsShared)
+
+    def get_queryset(self):
+        queryset = models.Capsule.objects.filter(date_to_open__lte=timezone.now())
+        return queryset
+
+
+
+
+
 
 
 
