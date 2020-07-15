@@ -246,3 +246,16 @@ class ExistUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserProfile
         fields = ('name',)
+
+
+class CapsuleDetailsSerializer(serializers.ModelSerializer):
+
+    owner = serializers.ReadOnlyField(source='owner.name')
+    images = CapsuleImageSerializer(many=True, read_only=True)
+    shared_to = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
+
+    class Meta:
+        model = models.Capsule
+        fields = ('id', 'capsule_name', 'owner', 'capsule_text', 'created_on', 'date_to_open', 'shared_to', 'images', )
+
+

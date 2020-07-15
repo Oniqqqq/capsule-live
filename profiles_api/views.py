@@ -170,9 +170,12 @@ class ExistUser(RetrieveModelMixin, CreateModelMixin, ListModelMixin, GenericVie
     permission_classes = (AllowAny, )
 
     def list(self, request):
-        return Response({'message': 'Hello!', 'user': 'user'})
+        return Response({'message': 'Hello Strex!', })
 
 
+class CapsuleDetail(generics.RetrieveAPIView):
+    queryset = models.Capsule.objects.all()
+    serializer_class = serializers.CapsuleDetailsSerializer
 
 
 
