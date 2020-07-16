@@ -177,11 +177,12 @@ class ExistUser(generics.RetrieveAPIView):
 
 class CapsuleDetail(generics.RetrieveAPIView):
     serializer_class = serializers.CapsuleDetailsSerializer
-    permission_classes = (IsAuthenticated, IsOwner | IsShared)
+    permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
-        queryset = models.Capsule.objects.all()
+        queryset = models.Capsule.objects.filter(shared_to=self.request.user)
         return queryset
+
 
 
 
