@@ -6,11 +6,12 @@ from django.conf.urls import url
 router = DefaultRouter()
 router.register(r'openedcapsules', views.OpenedCapsuleListViewSet, basename='OpenedListCapsule')
 router.register(r'closedcapsules', views.ClosedCapsuleListViewSet, basename='ClosedListCapsule')
-router.register(r'existuser', views.ExistUser, basename='existuser')
+
 
 urlpatterns = [
     path('', include(router.urls)),
     path('capsuledetail/<int:pk>/', views.CapsuleDetail.as_view(), name='halo'),
+    path('existuser/<str:name>/', views.ExistUser.as_view(), name='existuser'),
     url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
 
 ]

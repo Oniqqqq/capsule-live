@@ -164,11 +164,14 @@ class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
         return chain(queryset, queryset1)
 
 
-class ExistUser(RetrieveModelMixin, CreateModelMixin, ListModelMixin, GenericViewSet):
-    queryset = models.UserProfile.objects.all()
+class ExistUser(generics.RetrieveAPIView):
     serializer_class = serializers.ExistUserSerializer
     lookup_field = 'name'
     permission_classes = (IsAuthenticated, )
+    def get_queryset(self):
+        queryset = models.UserProfile.objects.all()
+        return queryset
+
 
 
 
