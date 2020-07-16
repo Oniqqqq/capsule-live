@@ -160,6 +160,7 @@ class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
         queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__gt=timezone.now())
 
+
         return chain(queryset, queryset1)
 
 
@@ -169,8 +170,6 @@ class ExistUser(RetrieveModelMixin, CreateModelMixin, ListModelMixin, GenericVie
     lookup_field = 'name'
     permission_classes = (IsAuthenticated, )
 
-    def list(self, request):
-        return Response({'message': 'Denchik krut!', })
 
 
 class CapsuleDetail(generics.RetrieveAPIView):

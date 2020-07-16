@@ -13,5 +13,4 @@ urlpatterns = [
     path('capsuledetail/<int:pk>/', views.CapsuleDetail.as_view(), name='halo'),
     url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
 
-
 ]
