@@ -147,9 +147,8 @@ class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lte=timezone.now())
-        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__lte=timezone.now())
 
-        return chain(queryset, queryset1)
+        return queryset
 
 
 class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
@@ -158,10 +157,9 @@ class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
-        queryset1 = models.Capsule.objects.filter(owner=self.request.user, date_to_open__gt=timezone.now())
 
 
-        return chain(queryset, queryset1)
+        return queryset
 
 
 class ExistUser(generics.RetrieveAPIView):
@@ -181,7 +179,12 @@ class CapsuleDetail(generics.RetrieveAPIView):
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user)
+
+
         return queryset
+
+
+
 
 
 
