@@ -178,8 +178,13 @@ class CapsuleDetail(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
-        queryset = models.Capsule.objects.filter(shared_to=self.request.user)
-
+        queryset1 = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
+        queryset2 = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lte=timezone.now())
+        queryset = models.Capsule.objects.all()
+        if not queryset1.exists():
+            queryset = queryset1
+        else:
+            queryset = queryset2
 
         return queryset
 
