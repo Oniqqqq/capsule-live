@@ -174,19 +174,19 @@ class ExistUser(generics.RetrieveAPIView):
 
 
 class CapsuleDetail(generics.RetrieveAPIView):
+    queryset = models.Capsule.objects.all()
     serializer_class = serializers.CapsuleDetailsSerializer
     permission_classes = (IsAuthenticated, )
 
-    def get_queryset(self):
-        queryset1 = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
-        queryset2 = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lte=timezone.now())
-        queryset = models.Capsule.objects.all()
-        if not queryset1.exists():
-            queryset = queryset1
-        else:
-            queryset = queryset2
+    def greater(self):
+        return models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lte=timezone.now()).exists()
 
-        return queryset
+
+    def get_serializer_class(self):
+        if self.greater():
+            return serializers.CapsuleDetailsSerializer
+        else:
+            return serializers.ClosedCapsuleDetailsSerializer
 
 
 

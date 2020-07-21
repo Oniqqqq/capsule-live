@@ -259,3 +259,13 @@ class CapsuleDetailsSerializer(serializers.ModelSerializer):
         fields = ('id', 'capsule_name', 'owner', 'capsule_text', 'created_on', 'date_to_open', 'shared_to', 'images', )
 
 
+class ClosedCapsuleDetailsSerializer(serializers.ModelSerializer):
+
+    owner = serializers.ReadOnlyField(source='owner.name')
+    shared_to = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
+
+    class Meta:
+        model = models.Capsule
+        fields = ('id', 'capsule_name', 'owner', 'date_to_open', 'shared_to' )
+
+
