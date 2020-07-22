@@ -266,6 +266,6 @@ class ClosedCapsuleDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'capsule_name', 'owner', 'date_to_open', 'shared_to' )
+        fields = ('id', 'capsule_name', 'owner', 'date_to_open', 'shared_to', )
 
 

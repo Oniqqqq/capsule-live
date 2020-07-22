@@ -143,7 +143,7 @@ class CapsuleCreateAPIView(generics.CreateAPIView):
 
 class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.OpenedCapsuleListSerializer
-    permission_classes = (IsAuthenticated, IsOwner | IsShared)
+    permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lte=timezone.now())
@@ -153,12 +153,10 @@ class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ClosedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ClosedCapsuleListSerializer
-    permission_classes = (IsAuthenticated, IsOwner | IsShared)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__gt=timezone.now())
-
-
         return queryset
 
 
@@ -174,19 +172,21 @@ class ExistUser(generics.RetrieveAPIView):
 
 
 class CapsuleDetail(generics.RetrieveAPIView):
-    queryset = models.Capsule.objects.all()
-    serializer_class = serializers.CapsuleDetailsSerializer
+
     permission_classes = (IsAuthenticated, )
 
     def greater(self):
-        return models.Capsule.objects.filter(shared_to=self.request.user, date_to_open__lte=timezone.now()).exists()
+        return models.Capsule.objects.filter(id=self.kwargs['pk'], shared_to=self.request.user, date_to_open__lte=timezone.now()).exists()
 
 
     def get_serializer_class(self):
         if self.greater():
             return serializers.CapsuleDetailsSerializer
-        else:
-            return serializers.ClosedCapsuleDetailsSerializer
+        return serializers.ClosedCapsuleDetailsSerializer
+
+    def get_queryset(self):
+        return models.Capsule.objects.filter(shared_to=self.request.user)
+
 
 
 
