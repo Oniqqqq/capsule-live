@@ -153,7 +153,7 @@ REST_AUTH_SERIALIZERS = {
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%d/%m/%Y %H:%M:%S",
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.IsAuthenticated',
@@ -186,7 +186,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'coachy.dd@gmail.com'
 EMAIL_HOST_PASSWORD = '13371@zL6520'
 
-SERVER_EMAIL = 'coachy.dd@gmail.com'
+#SERVER_EMAIL = 'coachy.dd@gmail.com'
 
 
 '''
