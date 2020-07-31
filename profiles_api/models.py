@@ -81,7 +81,7 @@ class Capsule(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     date_to_open_back = models.DateTimeField(blank=False)
     date_to_open = models.DateTimeField(blank=False)
-    shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user', null=True)
+    shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user', null=True,)
 
 
     def __str__(self):

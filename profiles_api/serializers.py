@@ -183,6 +183,7 @@ class SharedToSerializer(serializers.ModelSerializer):
 from datetime import date, timedelta
 
 
+
 class CapsuleSerializer(serializers.ModelSerializer):
 
     now = timezone.now() + timedelta(hours=1)
@@ -196,7 +197,7 @@ class CapsuleSerializer(serializers.ModelSerializer):
         # The keys can be missing in partial updates
 
         if 'date_to_open_back' in data and 'date_to_open' in data:
-            if (data['date_to_open_back'] + timedelta(hours=1)) >= (data['date_to_open'] + timedelta(hours=0)):
+            if (data['date_to_open_back']) >= (data['date_to_open']):
                 raise serializers.ValidationError({
                     'date_to_open': 'date of opening cannot be earlier than 1 hour after creations date',
                 })
@@ -212,14 +213,24 @@ class CapsuleSerializer(serializers.ModelSerializer):
         shared_to = validated_data.pop('shared_to')
 
         gallery_capsule = models.Capsule.objects.create(capsule_name=validated_data.get('capsule_name', 'no-capsule_name'), capsule_text=validated_data.get('capsule_text'), date_to_open_back=validated_data.get('date_to_open_back'), date_to_open=validated_data.get('date_to_open'),
-                                                        owner_id=owner_id)
+                                                        owner_id=1)
         gallery_capsule.save()
         for data in shared_to:
             gallery_capsule.shared_to.add(data)
-        gallery_capsule.save()
+        if gallery_capsule.shared_to.count() > 40:
+            raise serializers.ValidationError({
+                'shared_to': 'you can add 40 users',
+            })
+        else:
+            gallery_capsule.save()
 
         for image_data in images_data.values():
-            models.CapsuleImage.objects.create(gallery_capsule=gallery_capsule, capsule_file=image_data)
+            if len(list(images_data.values())) > 8:
+                raise serializers.ValidationError({
+                    'images': 'you can add 8 files',
+                })
+            else:
+                models.CapsuleImage.objects.create(gallery_capsule=gallery_capsule, capsule_file=image_data)
         return gallery_capsule
 
 
