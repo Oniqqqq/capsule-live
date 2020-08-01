@@ -12,6 +12,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('capsuledetail/<int:pk>/', views.CapsuleDetail.as_view(), name='halo'),
     path('existuser/<str:name>/', views.ExistUser.as_view(), name='existuser'),
+    path('addimage/<int:pk>/', views.AddImageView.as_view(), name='createimage'),
     url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
 
 ]

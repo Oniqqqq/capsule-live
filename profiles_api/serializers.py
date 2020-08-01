@@ -180,24 +180,23 @@ class SharedToSerializer(serializers.ModelSerializer):
 
 
 
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 
 
 
 class CapsuleSerializer(serializers.ModelSerializer):
 
     now = timezone.now() + timedelta(hours=1)
-
-    date_to_open_back = fields.DateTimeField(format='%d/%m/%Y %H:%M:%S', default=now)
     date_to_open = fields.DateTimeField(format='%d/%m/%Y %H:%M:%S', required=True)
+    created_on = fields.DateTimeField(format='%d/%m/%Y %H:%M:%S', default=datetime.utcnow)
     images = CapsuleImageSerializer(many=True, read_only=True)
     shared_to = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
 
     def validate(self, data):
         # The keys can be missing in partial updates
 
-        if 'date_to_open_back' in data and 'date_to_open' in data:
-            if (data['date_to_open_back']) >= (data['date_to_open']):
+        if 'created_on' in data and 'date_to_open' in data:
+            if (data['created_on']) >= (data['date_to_open']):
                 raise serializers.ValidationError({
                     'date_to_open': 'date of opening cannot be earlier than 1 hour after creations date',
                 })
@@ -205,15 +204,15 @@ class CapsuleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'capsule_name', 'capsule_text', 'created_on', 'date_to_open_back', 'date_to_open', 'shared_to', 'images', )
+        fields = ('id', 'capsule_name', 'capsule_text', 'created_on', 'date_to_open', 'shared_to', 'images', )
         
     def create(self, validated_data):
         images_data = self.context.get('view').request.FILES
         owner_id = self.context['request'].user.id
         shared_to = validated_data.pop('shared_to')
 
-        gallery_capsule = models.Capsule.objects.create(capsule_name=validated_data.get('capsule_name', 'no-capsule_name'), capsule_text=validated_data.get('capsule_text'), date_to_open_back=validated_data.get('date_to_open_back'), date_to_open=validated_data.get('date_to_open'),
-                                                        owner_id=1)
+        gallery_capsule = models.Capsule.objects.create(capsule_name=validated_data.get('capsule_name', 'no-capsule_name'), capsule_text=validated_data.get('capsule_text'), created_on=validated_data.get('created_on'), date_to_open=validated_data.get('date_to_open'),
+                                                        owner_id=owner_id)
         gallery_capsule.save()
         for data in shared_to:
             gallery_capsule.shared_to.add(data)
@@ -278,5 +277,22 @@ class ClosedCapsuleDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Capsule
         fields = ('id', 'capsule_name', 'owner', 'created_on', 'date_to_open', 'shared_to', )
+
+
+class AddImageSerializer(serializers.ModelSerializer):
+    images = CapsuleImageSerializer(many=True, read_only=True)
+    image_editor = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
+
+    class Meta:
+        model = models.Capsule
+        fields = ('id', 'image_editor', 'images', )
+
+    def update(self, instance, validated_data):
+        currentuser = self.context['request'].user.id
+        instance.image_editor.add(currentuser)
+        instance.save()
+        return instance
+
+
 
 

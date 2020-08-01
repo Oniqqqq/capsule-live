@@ -189,6 +189,10 @@ class CapsuleDetail(generics.RetrieveAPIView):
 
 
 
+class AddImageView(generics.CreateAPIView):
+    queryset = models.Capsule.objects.all()
+    serializer_class = serializers.AddImageSerializer
+    permission_classes = (IsAuthenticated, )
 
 
 
