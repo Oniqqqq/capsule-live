@@ -236,19 +236,21 @@ class CapsuleSerializer(serializers.ModelSerializer):
 class OpenedCapsuleListSerializer(serializers.ModelSerializer):
 
     owner = serializers.ReadOnlyField(source='owner.name')
+    image_editor = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'capsule_name', 'date_to_open', 'owner')
+        fields = ('id', 'capsule_name', 'date_to_open', 'owner', 'image_editor')
 
 
 class ClosedCapsuleListSerializer(serializers.ModelSerializer):
 
     owner = serializers.ReadOnlyField(source='owner.name')
+    image_editor = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'capsule_name', 'date_to_open', 'owner')
+        fields = ('id', 'capsule_name', 'date_to_open', 'owner', 'image_editor')
 
 
 class ExistUserSerializer(serializers.ModelSerializer):
@@ -281,17 +283,34 @@ class ClosedCapsuleDetailsSerializer(serializers.ModelSerializer):
 
 class AddImageSerializer(serializers.ModelSerializer):
     images = CapsuleImageSerializer(many=True, read_only=True)
-    image_editor = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
+
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'image_editor', 'images', )
+        fields = ('id', 'images')
 
-    def update(self, instance, validated_data):
+    def update(self, instance, validated_data, partial=True):
+
+        images_data = self.context.get('view').request.FILES
         currentuser = self.context['request'].user.id
+
+        if models.Capsule.objects.filter(id=self.context['view'].kwargs.get('pk'), image_editor=self.context['request'].user.id).exists():
+            raise serializers.ValidationError({
+                'image_editor': 'dennise huise',
+            })
         instance.image_editor.add(currentuser)
         instance.save()
+
+
+        for image_data in images_data.values():
+            if len(list(images_data.values())) > 8:
+                raise serializers.ValidationError({
+                    'images': 'you can add 8 files',
+                })
+            else:
+                models.CapsuleImage.objects.create(gallery_capsule=instance, capsule_file=image_data)
         return instance
+
 
 
 

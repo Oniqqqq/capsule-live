@@ -141,6 +141,7 @@ class CapsuleCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated, )
 
 
+
 class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.OpenedCapsuleListSerializer
     permission_classes = (IsAuthenticated, )
@@ -189,10 +190,17 @@ class CapsuleDetail(generics.RetrieveAPIView):
 
 
 
-class AddImageView(generics.CreateAPIView):
-    queryset = models.Capsule.objects.all()
+class AddImageView(generics.UpdateAPIView):
+
     serializer_class = serializers.AddImageSerializer
     permission_classes = (IsAuthenticated, )
+    def get_queryset(self):
+        return models.Capsule.objects.filter(shared_to=self.request.user)
+
+
+
+
+
 
 
 
