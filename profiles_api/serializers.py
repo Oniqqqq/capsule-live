@@ -294,13 +294,17 @@ class AddImageSerializer(serializers.ModelSerializer):
         images_data = self.context.get('view').request.FILES
         currentuser = self.context['request'].user.id
 
-        if models.Capsule.objects.filter(id=self.context['view'].kwargs.get('pk'), image_editor=self.context['request'].user.id).exists():
+        if models.Capsule.objects.filter(id=self.context['view'].kwargs.get('pk'), owner=self.context['request'].user.id).exists():
+            raise serializers.ValidationError({
+                'owner': 'dennise huise',
+            })
+        if models.Capsule.objects.filter(id=self.context['view'].kwargs.get('pk'),
+                                      image_editor=self.context['request'].user.id).exists():
             raise serializers.ValidationError({
                 'image_editor': 'dennise huise',
             })
         instance.image_editor.add(currentuser)
         instance.save()
-
 
         for image_data in images_data.values():
             if len(list(images_data.values())) > 8:
