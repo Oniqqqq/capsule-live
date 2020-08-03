@@ -211,24 +211,24 @@ class CapsuleSerializer(serializers.ModelSerializer):
         owner_id = self.context['request'].user.id
         shared_to = validated_data.pop('shared_to')
 
+        if len(list(images_data.values())) > 8:
+            raise serializers.ValidationError({
+                'images': 'you can add 8 files',
+            })
+
+        if len(list(shared_to)) > 2:
+            raise serializers.ValidationError({
+                'shared_to': 'you can add 40 users',
+            })
         gallery_capsule = models.Capsule.objects.create(capsule_name=validated_data.get('capsule_name', 'no-capsule_name'), capsule_text=validated_data.get('capsule_text'), created_on=validated_data.get('created_on'), date_to_open=validated_data.get('date_to_open'),
                                                         owner_id=owner_id)
         gallery_capsule.save()
         for data in shared_to:
             gallery_capsule.shared_to.add(data)
-        if gallery_capsule.shared_to.count() > 40:
-            raise serializers.ValidationError({
-                'shared_to': 'you can add 40 users',
-            })
-        else:
-            gallery_capsule.save()
+
+        gallery_capsule.save()
 
         for image_data in images_data.values():
-            if len(list(images_data.values())) > 8:
-                raise serializers.ValidationError({
-                    'images': 'you can add 8 files',
-                })
-            else:
                 models.CapsuleImage.objects.create(gallery_capsule=gallery_capsule, capsule_file=image_data)
         return gallery_capsule
 
@@ -303,8 +303,6 @@ class AddImageSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 'image_editor': 'dennise huise',
             })
-        instance.image_editor.add(currentuser)
-        instance.save()
 
         for image_data in images_data.values():
             if len(list(images_data.values())) > 8:
@@ -313,6 +311,8 @@ class AddImageSerializer(serializers.ModelSerializer):
                 })
             else:
                 models.CapsuleImage.objects.create(gallery_capsule=instance, capsule_file=image_data)
+                instance.image_editor.add(currentuser)
+                instance.save()
         return instance
 
 

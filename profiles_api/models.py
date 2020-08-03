@@ -80,8 +80,8 @@ class Capsule(models.Model):
         settings.AUTH_USER_MODEL, related_name='owner_user', on_delete=models.SET(get_deleted_user), default=1)
     created_on = models.DateTimeField(default=timezone.now)
     date_to_open = models.DateTimeField(blank=False)
-    shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user', null=True,)
-    image_editor = models.ManyToManyField(UserProfile, blank=True, related_name='image_editor_user', null=True)
+    shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user')
+    image_editor = models.ManyToManyField(UserProfile, blank=True, related_name='image_editor_user')
 
 
     def __str__(self):
