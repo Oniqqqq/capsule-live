@@ -1,44 +1,21 @@
-import datetime
-from datetime import timedelta
-
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.exceptions import ValidationError
-from rest_framework.generics import GenericAPIView, get_object_or_404
-from rest_framework import serializers, generics, filters
-from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, ListModelMixin
-from rest_framework.permissions import (AllowAny)
-from allauth.account.models import EmailAddress
-from django.utils.translation import ugettext_lazy as _
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import serializers, generics
 from rest_framework import viewsets
-from rest_framework.viewsets import GenericViewSet
-
+from profiles_api import models
+from django.utils import timezone
 from profiles_api import serializers
-from rest_framework.permissions import IsAuthenticated
-
-
 from django.contrib.auth import (
     login as django_login,
-
 )
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
-
 from rest_framework import status
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-
 from rest_auth.app_settings import (
-    TokenSerializer, UserDetailsSerializer, LoginSerializer,
-    PasswordResetSerializer, PasswordResetConfirmSerializer,
-    PasswordChangeSerializer, JWTSerializer, create_token
+    TokenSerializer, LoginSerializer,
+    JWTSerializer, create_token
 )
 from rest_auth.models import TokenModel
 from rest_auth.utils import jwt_encode
@@ -125,21 +102,11 @@ class LoginView(GenericAPIView):
         self.login()
         return self.get_response()
 
-from profiles_api import models
-
-from profiles_api import serializers
-from rest_framework.decorators import permission_classes
-
-from profiles_api.permissions import IsOwner, IsShared
-
-from django.utils import timezone
-from itertools import chain
 
 class CapsuleCreateAPIView(generics.CreateAPIView):
     queryset = models.Capsule.objects.all()
     serializer_class = serializers.CapsuleSerializer
     permission_classes = (IsAuthenticated, )
-
 
 
 class OpenedCapsuleListViewSet(viewsets.ReadOnlyModelViewSet):
@@ -165,20 +132,17 @@ class ExistUser(generics.RetrieveAPIView):
     serializer_class = serializers.ExistUserSerializer
     lookup_field = 'name'
     permission_classes = (AllowAny, )
+
     def get_queryset(self):
         queryset = models.UserProfile.objects.all()
         return queryset
 
 
-
-
 class CapsuleDetail(generics.RetrieveAPIView):
-
     permission_classes = (IsAuthenticated, )
 
     def greater(self):
         return models.Capsule.objects.filter(id=self.kwargs['pk'], shared_to=self.request.user, date_to_open__lte=timezone.now()).exists()
-
 
     def get_serializer_class(self):
         if self.greater():
@@ -189,11 +153,10 @@ class CapsuleDetail(generics.RetrieveAPIView):
         return models.Capsule.objects.filter(shared_to=self.request.user)
 
 
-
 class AddImageView(generics.UpdateAPIView):
-
     serializer_class = serializers.AddImageSerializer
     permission_classes = (IsAuthenticated, )
+
     def get_queryset(self):
         return models.Capsule.objects.filter(shared_to=self.request.user)
 

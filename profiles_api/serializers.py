@@ -1,18 +1,11 @@
 from django.contrib.auth import get_user_model, authenticate
 from django.conf import settings
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.contrib.auth.tokens import default_token_generator
 from django.utils import timezone
-from django.utils.http import urlsafe_base64_decode as uid_decoder
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import force_text
-
 from rest_framework import serializers, exceptions, fields
-from rest_framework.exceptions import ValidationError
-
 from rest_auth.models import TokenModel
 from rest_auth.utils import import_callable
-
+from datetime import datetime, timedelta
 from profiles_api.models import UserProfile
 from profiles_api import models
 
@@ -136,6 +129,7 @@ class TokenSerializer(serializers.ModelSerializer):
         model = TokenModel
         fields = ('key',)
 
+
 class UserDetailsSerializer(serializers.ModelSerializer):
     """
     User model w/o password
@@ -179,13 +173,7 @@ class SharedToSerializer(serializers.ModelSerializer):
         fields = ('shared_to',)
 
 
-
-from datetime import datetime, timedelta
-
-
-
 class CapsuleSerializer(serializers.ModelSerializer):
-
     now = timezone.now() + timedelta(hours=1)
     date_to_open = fields.DateTimeField(format='%d/%m/%Y %H:%M:%S', required=True)
     created_on = fields.DateTimeField(format='%d/%m/%Y %H:%M:%S', default=datetime.utcnow)
@@ -234,9 +222,7 @@ class CapsuleSerializer(serializers.ModelSerializer):
 
 
 class OpenedCapsuleListSerializer(serializers.ModelSerializer):
-
     owner = serializers.ReadOnlyField(source='owner.name')
-    image_editor = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
 
     class Meta:
         model = models.Capsule
@@ -244,7 +230,6 @@ class OpenedCapsuleListSerializer(serializers.ModelSerializer):
 
 
 class ClosedCapsuleListSerializer(serializers.ModelSerializer):
-
     owner = serializers.ReadOnlyField(source='owner.name')
     image_editor = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
 
@@ -261,7 +246,6 @@ class ExistUserSerializer(serializers.ModelSerializer):
 
 
 class CapsuleDetailsSerializer(serializers.ModelSerializer):
-
     owner = serializers.ReadOnlyField(source='owner.name')
     images = CapsuleImageSerializer(many=True, read_only=True)
     shared_to = serializers.SlugRelatedField(queryset=models.UserProfile.objects.all(), slug_field='name', many=True)
@@ -284,35 +268,34 @@ class ClosedCapsuleDetailsSerializer(serializers.ModelSerializer):
 class AddImageSerializer(serializers.ModelSerializer):
     images = CapsuleImageSerializer(many=True, read_only=True)
 
-
     class Meta:
         model = models.Capsule
         fields = ('id', 'images')
 
     def update(self, instance, validated_data, partial=True):
-
         images_data = self.context.get('view').request.FILES
         currentuser = self.context['request'].user.id
+
+        if len(list(images_data.values())) > 8:
+            raise serializers.ValidationError({
+                'images': 'you can add 8 files',
+            })
 
         if models.Capsule.objects.filter(id=self.context['view'].kwargs.get('pk'), owner=self.context['request'].user.id).exists():
             raise serializers.ValidationError({
                 'owner': 'dennise huise',
             })
-        if models.Capsule.objects.filter(id=self.context['view'].kwargs.get('pk'),
-                                      image_editor=self.context['request'].user.id).exists():
+        if models.Capsule.objects.filter(id=self.context['view'].kwargs.get('pk'), image_editor=self.context['request'].user.id).exists():
             raise serializers.ValidationError({
                 'image_editor': 'dennise huise',
             })
 
+        instance.image_editor.add(currentuser)
+        instance.save()
+
         for image_data in images_data.values():
-            if len(list(images_data.values())) > 8:
-                raise serializers.ValidationError({
-                    'images': 'you can add 8 files',
-                })
-            else:
-                models.CapsuleImage.objects.create(gallery_capsule=instance, capsule_file=image_data)
-                instance.image_editor.add(currentuser)
-                instance.save()
+            models.CapsuleImage.objects.create(gallery_capsule=instance, capsule_file=image_data)
+
         return instance
 
 

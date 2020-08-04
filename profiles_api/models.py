@@ -1,16 +1,10 @@
-import datetime
 
-from django.core import cache
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
-from django.forms import ValidationError
-
-
 
 class UserProfileManager(BaseUserManager):
     """
@@ -71,8 +65,6 @@ def cache_key(param, pk):
     pass
 
 
-
-
 class Capsule(models.Model):
     capsule_name = models.CharField(max_length=255)
     capsule_text = models.TextField(max_length=360, blank=True)
@@ -83,7 +75,6 @@ class Capsule(models.Model):
     shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user')
     image_editor = models.ManyToManyField(UserProfile, blank=True, related_name='image_editor_user')
 
-
     def __str__(self):
         return self.capsule_name
 
@@ -91,11 +82,9 @@ class Capsule(models.Model):
         super(Capsule, self).save(*args, **kwargs)
 
 
-
 class CapsuleImage(models.Model):
     capsule_file = models.FileField(blank=True, null=True,
                                     upload_to='media/covers/%Y/%m/%D/')
-
     gallery_capsule = models.ForeignKey(Capsule, related_name='images', on_delete=models.CASCADE)
 
 
