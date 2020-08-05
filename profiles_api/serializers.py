@@ -204,7 +204,7 @@ class CapsuleSerializer(serializers.ModelSerializer):
                 'images': 'you can add 8 files',
             })
 
-        if len(list(shared_to)) > 2:
+        if len(list(shared_to)) > 40:
             raise serializers.ValidationError({
                 'shared_to': 'you can add 40 users',
             })
