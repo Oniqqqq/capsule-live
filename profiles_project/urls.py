@@ -10,11 +10,16 @@ from allauth.account.views import confirm_email, password_reset
 from django.conf import settings
 from profiles_api import views
 from rest_auth.views import PasswordResetConfirmView
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('profiles_api.urls')),
     path('login/', views.LoginView.as_view(), name='rest_login'),
+    path('apple-app-site-association/', TemplateView.as_view(
+        template_name='apple-app-site-association',
+        content_type='application/json',
+        )),
     re_path(
         r'^rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         PasswordResetConfirmView.as_view(),
