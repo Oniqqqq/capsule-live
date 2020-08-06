@@ -72,7 +72,9 @@ AUTHENTICATION_BACKENDS = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'profiles_api/templates'),
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'capsule',
         'USER': 'postgres',
-        'PASSWORD': '1337113371gH',
+        'PASSWORD': '1337113371',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
