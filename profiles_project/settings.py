@@ -170,7 +170,14 @@ REST_FRAMEWORK = {
             'rest_framework.permissions.IsAuthenticated',
         ],
 
+        # Only enable JSON renderer by default.
+    #'DEFAULT_RENDERER_CLASSES': [
+      #  'rest_framework.renderers.JSONRenderer',
+    #]
+
 }
+
+
 
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'name'
@@ -200,13 +207,13 @@ EMAIL_HOST_PASSWORD = '13371@zL6520'
 #SERVER_EMAIL = 'coachy.dd@gmail.com'
 
 
-'''
+
 AWS_ACCESS_KEY_ID = 'AKIARJQ6CH3VGTAEVTOM'
 AWS_SECRET_ACCESS_KEY = 'APCBD2xvm6khgA9V7O/ZVpbcPWmnUeK3AixvwyaN'
-AWS_STORAGE_BUCKET_NAME = 'djalil-timecapsule'
+AWS_STORAGE_BUCKET_NAME = 'yourtimecapsule'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-'''
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
