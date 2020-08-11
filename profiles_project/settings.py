@@ -25,7 +25,7 @@ SECRET_KEY = 's(^ac6+$keq1jp46z-bdx6q%2j_wncz!=x_p9az3xjta9hw&m-'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', '.herokussl.com', '*.herokussl.com', '*.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', '.herokussl.com', '*.herokussl.com', '*.herokuapp.com', '.yourtimecapsule.fun']
 
 # Application definition
 
@@ -208,9 +208,11 @@ EMAIL_HOST_PASSWORD = '13371@zL6520'
 
 
 
-AWS_ACCESS_KEY_ID = 'AKIARJQ6CH3VGTAEVTOM'
-AWS_SECRET_ACCESS_KEY = 'APCBD2xvm6khgA9V7O/ZVpbcPWmnUeK3AixvwyaN'
+AWS_ACCESS_KEY_ID = 'AKIARJQ6CH3VJQGKZG7H'
+AWS_SECRET_ACCESS_KEY = 'Hnq5nKV/jz0rtBp7T6QAyZmzn4lBk12DtZfaBZLJ'
 AWS_STORAGE_BUCKET_NAME = 'yourtimecapsule'
+AWS_S3_REGION_NAME = 'eu-north-1'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
