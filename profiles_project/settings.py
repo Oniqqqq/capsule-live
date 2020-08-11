@@ -207,7 +207,7 @@ EMAIL_HOST_PASSWORD = '13371@zL6520'
 #SERVER_EMAIL = 'coachy.dd@gmail.com'
 
 
-
+''''
 AWS_ACCESS_KEY_ID = 'AKIARJQ6CH3VJQGKZG7H'
 AWS_SECRET_ACCESS_KEY = 'Hnq5nKV/jz0rtBp7T6QAyZmzn4lBk12DtZfaBZLJ'
 AWS_STORAGE_BUCKET_NAME = 'yourtimecapsule'
@@ -216,6 +216,6 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+'''
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
