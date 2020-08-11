@@ -25,7 +25,7 @@ SECRET_KEY = 's(^ac6+$keq1jp46z-bdx6q%2j_wncz!=x_p9az3xjta9hw&m-'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', '.herokussl.com', '*.herokussl.com', '*.herokuapp.com', '.yourtimecapsule.fun']
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', '.herokussl.com', '*.herokussl.com', '*.herokuapp.com', '.www.yourtimecapsule.live']
 
 # Application definition
 
