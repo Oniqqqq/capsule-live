@@ -198,11 +198,12 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 SITE_ID = 1
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+DEFAULT_FROM_EMAIL = 'noreply@yourtimecapsule.live'
+EMAIL_HOST = 'smtp.eu.mailgun.org'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'coachy.dd@gmail.com'
-EMAIL_HOST_PASSWORD = '13371@zL6520'
+EMAIL_HOST_USER = 'postmaster@mg.yourtimecapsule.live'
+EMAIL_HOST_PASSWORD = 'f2eeecb547031b8704b7beaf137cf6b0-07e45e2a-57c71a95'
 
 #SERVER_EMAIL = 'coachy.dd@gmail.com'
 
