@@ -167,17 +167,13 @@ class AddImageView(generics.UpdateAPIView):
 
 
 
-from rest_framework import serializers
+
 from allauth.account.models import EmailAddress
 from django.utils.translation import ugettext_lazy as _
 
 
-class ResendEmailVerificationSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-
-    
 class ResendEmailVerification(GenericAPIView):
-    serializer_class = ResendEmailVerificationSerializer
+    serializer_class = serializers.ResendEmailVerificationSerializer
     permission_classes = (AllowAny,)
     allowed_methods = ('POST', 'OPTIONS', 'HEAD')
 

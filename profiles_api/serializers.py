@@ -299,6 +299,8 @@ class AddImageSerializer(serializers.ModelSerializer):
         return instance
 
 
+class ResendEmailVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
 
 
 
