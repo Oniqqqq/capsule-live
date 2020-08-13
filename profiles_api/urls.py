@@ -13,6 +13,8 @@ urlpatterns = [
     path('capsuledetail/<int:pk>/', views.CapsuleDetail.as_view(), name='halo'),
     path('existuser/<str:name>/', views.ExistUser.as_view(), name='existuser'),
     path('addimage/<int:pk>/', views.AddImageView.as_view(), name='createimage'),
+    path('rest-auth/resend-verification-email/', views.ResendEmailVerification.as_view(),
+         name='rest_resend_verification_email'),
     url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
 
 ]
