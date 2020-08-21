@@ -192,7 +192,7 @@ class CapsuleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'capsule_name', 'capsule_text', 'created_on', 'date_to_open', 'shared_to', 'images', )
+        fields = ('id', 'capsule_name', 'capsule_text', 'created_on', 'date_to_open', 'shared_to', 'images', 'isPaid')
         
     def create(self, validated_data):
         images_data = self.context.get('view').request.FILES
@@ -208,7 +208,7 @@ class CapsuleSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 'shared_to': 'you can add 40 users',
             })
-        gallery_capsule = models.Capsule.objects.create(capsule_name=validated_data.get('capsule_name', 'no-capsule_name'), capsule_text=validated_data.get('capsule_text'), created_on=validated_data.get('created_on'), date_to_open=validated_data.get('date_to_open'),
+        gallery_capsule = models.Capsule.objects.create(capsule_name=validated_data.get('capsule_name', 'no-capsule_name'), capsule_text=validated_data.get('capsule_text'), created_on=validated_data.get('created_on'), isPaid=validated_data.get('isPaid'), date_to_open=validated_data.get('date_to_open'),
                                                         owner_id=owner_id)
         gallery_capsule.save()
         for data in shared_to:
@@ -262,7 +262,7 @@ class ClosedCapsuleDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'capsule_name', 'owner', 'created_on', 'date_to_open', 'shared_to', )
+        fields = ('id', 'capsule_name', 'owner', 'created_on', 'date_to_open', 'shared_to', 'isPaid')
 
 
 class AddImageSerializer(serializers.ModelSerializer):
