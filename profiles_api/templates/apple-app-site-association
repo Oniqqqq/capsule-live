@@ -3,8 +3,8 @@
         "apps": [],
         "details": [{
             "appID": "8DVL65DP5L.com.khdenis.TimeCapsule",
-            "paths": ["https://www.yourtimecapsule.live/rest-auth/password/*",
-            "https://www.yourtimecapsule.live/accounts-rest/registration/account-confirm-email/*"]
+            "paths": ["/rest-auth/password/*",
+            "/rest-auth/password/*"]
         }]
     }
 }
