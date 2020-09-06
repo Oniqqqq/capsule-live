@@ -192,7 +192,9 @@ class ResendEmailVerification(GenericAPIView):
 
 
 
+from push_notifications.models import APNSDevice
 
+class TestPush(GenericAPIView):
 
-
-
+    device = APNSDevice.objects.get(registration_id='9c973dc3e0c371fd7b1809e1a375bf2e3a75440a2bb2f534deb1521421d7bff2')
+    device.send_message(" omae wa mou shindeiru ＼(≧▽≦)／ NOLAN FELICITY MY CRUSH", sound='default')

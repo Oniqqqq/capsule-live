@@ -1,4 +1,5 @@
 from django.urls import path, include
+from push_notifications.api.rest_framework import APNSDeviceAuthorizedViewSet
 from rest_framework.routers import DefaultRouter
 from profiles_api import views
 from django.conf.urls import url
@@ -16,5 +17,10 @@ urlpatterns = [
     path('rest-auth/resend-verification-email/', views.ResendEmailVerification.as_view(),
          name='rest_resend_verification_email'),
     url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
+
+   url(r'^pushtest/$', views.TestPush.as_view(), name='testpush'),
+
+    url(r'^device/apns/?$', APNSDeviceAuthorizedViewSet.as_view({'post': 'create'}), name='create_apns_device'),
+
 
 ]

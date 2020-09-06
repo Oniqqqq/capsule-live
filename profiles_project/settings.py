@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'storages',
     'profiles_api',
+    'push_notifications',
+
+
 
 
 ]
@@ -91,7 +94,18 @@ WSGI_APPLICATION = 'profiles_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'capsule',
+        'USER': 'postgres',
+        'PASSWORD': '1337113371zZ',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -205,8 +219,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'postmaster@mg.yourtimecapsule.live'
 EMAIL_HOST_PASSWORD = 'f2eeecb547031b8704b7beaf137cf6b0-07e45e2a-57c71a95'
 
-#SERVER_EMAIL = 'coachy.dd@gmail.com'
-
 
 
 AWS_ACCESS_KEY_ID = 'AKIARJQ6CH3VJQGKZG7H'
@@ -220,3 +232,29 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
+'''
+PUSH_NOTIFICATIONS_SETTINGS = {
+  # Load and process all PUSH_NOTIFICATIONS_SETTINGS using the AppConfig manager.
+  "CONFIG": "push_notifications.conf.AppConfig",
+
+  "APPLICATIONS": {
+        "TimeCapsule": {
+            "PLATFORM": "APNS",
+            'HOST': 'api.sandbox.push.apple.com',
+            "CERTIFICATE": "PushCertificate.pem",
+            "TOPIC": 'com.khdenis.TimeCapsule',
+                },
+  }
+
+}
+
+
+'''
+
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+
+        "APNS_CERTIFICATE": "PushCertificate.pem",
+        "APNS_TOPIC": "com.khdenis.TimeCapsule",
+        "UPDATE_ON_DUPLICATE_REG_ID": 'True',
+}
