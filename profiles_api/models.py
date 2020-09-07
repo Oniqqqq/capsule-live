@@ -79,7 +79,7 @@ class Capsule(models.Model):
     shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user')
     image_editor = models.ManyToManyField(UserProfile, blank=True, related_name='image_editor_user')
     isPaid = models.BooleanField(default=False)
-    notificationsent = models.BooleanField(null=True)
+    notificationsent = models.BooleanField(null=True, default=False)
 
     def __str__(self):
         return self.capsule_name
