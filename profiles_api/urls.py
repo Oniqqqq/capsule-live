@@ -18,8 +18,6 @@ urlpatterns = [
          name='rest_resend_verification_email'),
     url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
 
-   url(r'^pushtest/$', views.TestPush.as_view(), name='testpush'),
-
     url(r'^device/apns/?$', APNSDeviceAuthorizedViewSet.as_view({'post': 'create'}), name='create_apns_device'),
 
 

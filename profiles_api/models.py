@@ -1,10 +1,14 @@
+from datetime import datetime
 
+from django.core.management import BaseCommand
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from push_notifications.models import APNSDevice
+
 
 class UserProfileManager(BaseUserManager):
     """
@@ -75,6 +79,7 @@ class Capsule(models.Model):
     shared_to = models.ManyToManyField(UserProfile, blank=True, related_name='shared_to_user')
     image_editor = models.ManyToManyField(UserProfile, blank=True, related_name='image_editor_user')
     isPaid = models.BooleanField(default=False)
+    notificationsent = models.BooleanField(null=True)
 
     def __str__(self):
         return self.capsule_name
@@ -87,8 +92,6 @@ class CapsuleImage(models.Model):
     capsule_file = models.FileField(blank=True, null=True,
                                     upload_to='media/covers/%Y/%m/%D/')
     gallery_capsule = models.ForeignKey(Capsule, related_name='images', on_delete=models.CASCADE)
-
-
 
 
 
