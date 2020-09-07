@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from push_notifications.models import APNSDevice
 from rest_framework import serializers, exceptions, fields
 from rest_auth.models import TokenModel
 from rest_auth.utils import import_callable
@@ -215,6 +216,14 @@ class CapsuleSerializer(serializers.ModelSerializer):
             gallery_capsule.shared_to.add(data)
 
         gallery_capsule.save()
+
+
+        tokens_query = list(APNSDevice.objects.filter(user__in=list(shared_to)).values_list('registration_id', flat=True).distinct())
+
+        for token in tokens_query:
+            device = APNSDevice.objects.get(registration_id=token)
+
+            device.send_message("A new Capsule was created!", sound='default')
 
         for image_data in images_data.values():
                 models.CapsuleImage.objects.create(gallery_capsule=gallery_capsule, capsule_file=image_data)

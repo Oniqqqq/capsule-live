@@ -16,8 +16,9 @@ class Command(BaseCommand):
 
         for token in tokens_query:
             device = APNSDevice.objects.get(registration_id=token)
-            device.send_message(" omae wa mou shindeiru ＼(≧▽≦)／ NOLAN FELICITY MY CRUSH", sound='default')
+            device.send_message("You have opened Capsules!", sound='default')
 
         for gap in users_query.all():
             gap.notificationsent = True
             gap.save()
+
