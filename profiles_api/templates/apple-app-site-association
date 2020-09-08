@@ -3,7 +3,7 @@
         "apps": [],
         "details": [{
             "appID": "8DVL65DP5L.com.khdenis.TimeCapsule",
-            "paths": ["*"]
+            "paths": ["NOT /account/confirm-email/*", "NOT /verification%3D1/"]
         }]
     }
 }
