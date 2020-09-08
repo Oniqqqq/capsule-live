@@ -1,4 +1,5 @@
-
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
 
 from django.contrib import admin
@@ -27,8 +28,8 @@ urlpatterns = [
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^account/', include('allauth.urls')),
-
-
+    url(r'^verification=1/', TemplateView.as_view(template_name='index.html'),
+        name='account_confirm_email'),
 ]
 
 if settings.DEBUG:

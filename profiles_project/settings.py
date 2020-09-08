@@ -156,15 +156,18 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/statics/'
+
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'statics'),
+
+    os.path.join(BASE_DIR, 'static'),
+
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'statics/media')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 AUTH_USER_MODEL = 'profiles_api.UserProfile'
 
@@ -205,8 +208,8 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 15
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/?verification=1'
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/verification=1'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/verification=1'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 

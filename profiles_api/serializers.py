@@ -223,7 +223,7 @@ class CapsuleSerializer(serializers.ModelSerializer):
         for token in tokens_query:
             device = APNSDevice.objects.get(registration_id=token)
 
-            device.send_message("A new Capsule was created!", sound='default')
+            device.send_message("A new Capsule was created!", sound='default', categoryIdentifier='1')
 
         for image_data in images_data.values():
                 models.CapsuleImage.objects.create(gallery_capsule=gallery_capsule, capsule_file=image_data)

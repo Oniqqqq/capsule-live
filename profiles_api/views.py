@@ -1,5 +1,8 @@
+from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 from rest_framework import serializers, generics
 from rest_framework import viewsets
+from rest_framework.renderers import TemplateHTMLRenderer
+
 from profiles_api import models
 from django.utils import timezone
 from profiles_api import serializers
@@ -192,6 +195,12 @@ class ResendEmailVerification(GenericAPIView):
 
 
 
-from push_notifications.models import APNSDevice
+class TemplateView(TemplateResponseMixin, ContextMixin, View):
+
+
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
 
 
