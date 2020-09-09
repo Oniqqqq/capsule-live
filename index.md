@@ -4,7 +4,7 @@
 
 Having trouble with Application? Contact us at dk.devgroup@gmail.com and we’ll help you sort it out.
 
-###Privacy Policy
+**Privacy Policy**
 
 
 Khusnullin Denis built the Time Capsule app as a Freemium app. This SERVICE is provided by Khusnullin Denis at no cost and is intended for use as is.
