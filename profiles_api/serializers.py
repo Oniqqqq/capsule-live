@@ -235,7 +235,7 @@ class OpenedCapsuleListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'capsule_name', 'date_to_open', 'owner')
+        fields = ('id', 'capsule_name', 'date_to_open', 'owner', 'isPaid')
 
 
 class ClosedCapsuleListSerializer(serializers.ModelSerializer):
@@ -244,7 +244,7 @@ class ClosedCapsuleListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Capsule
-        fields = ('id', 'capsule_name', 'date_to_open', 'owner', 'image_editor')
+        fields = ('id', 'capsule_name', 'date_to_open', 'owner', 'image_editor', 'isPaid')
 
 
 class ExistUserSerializer(serializers.ModelSerializer):
