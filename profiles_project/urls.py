@@ -1,6 +1,3 @@
-from django.conf.urls.static import static
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.views.static import serve
 
 from django.contrib import admin
 from django.urls import path, include, re_path
@@ -10,7 +7,7 @@ from django.conf import settings
 from profiles_api import views
 from rest_auth.views import PasswordResetConfirmView
 from django.views.generic import TemplateView
-
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),

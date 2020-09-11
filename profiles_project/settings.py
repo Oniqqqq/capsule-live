@@ -188,9 +188,9 @@ REST_FRAMEWORK = {
         ],
 
         # Only enable JSON renderer by default.
-    #'DEFAULT_RENDERER_CLASSES': [
-      #  'rest_framework.renderers.JSONRenderer',
-    #]
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ]
 
 }
 
@@ -233,7 +233,7 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 '''
 PUSH_NOTIFICATIONS_SETTINGS = {
