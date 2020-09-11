@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 's(^ac6+$keq1jp46z-bdx6q%2j_wncz!=x_p9az3xjta9hw&m-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', '.herokussl.com', '*.herokussl.com', '*.herokuapp.com', '.yourtimecapsule.live']
@@ -166,6 +166,8 @@ STATICFILES_DIRS = [
 
 ]
 
+STATIC_HOST = 'https://www.yourtimecapsule.live' if not DEBUG else ''
+STATIC_URL = STATIC_HOST + '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
