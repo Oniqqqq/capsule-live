@@ -1,5 +1,10 @@
 ## Welcome to TimeCapsule Support
 
+Founders:
+https://www.instagram.com/nuachea/
+https://www.instagram.com/oniqqq_/
+https://www.instagram.com/rinedition/
+
 ### Support or Contact
 
 Having trouble with Application? Contact us at dk.devgroup@gmail.com and we’ll help you sort it out.
