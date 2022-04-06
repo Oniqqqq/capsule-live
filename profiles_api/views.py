@@ -164,13 +164,6 @@ class AddImageView(generics.UpdateAPIView):
         return models.Capsule.objects.filter(shared_to=self.request.user)
 
 
-
-
-
-
-
-
-
 from allauth.account.models import EmailAddress
 from django.utils.translation import ugettext_lazy as _
 

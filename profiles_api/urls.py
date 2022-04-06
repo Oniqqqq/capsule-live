@@ -16,8 +16,9 @@ urlpatterns = [
     path('addimage/<int:pk>/', views.AddImageView.as_view(), name='createimage'),
     path('rest-auth/resend-verification-email/', views.ResendEmailVerification.as_view(),
          name='rest_resend_verification_email'),
-    url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
 
+
+    url(r'^capsule/$', views.CapsuleCreateAPIView.as_view(), name='createcapsule'),
     url(r'^device/apns/?$', APNSDeviceAuthorizedViewSet.as_view({'post': 'create'}), name='create_apns_device'),
 
 

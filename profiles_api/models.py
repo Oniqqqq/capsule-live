@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.core.management import BaseCommand
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser
@@ -48,6 +49,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', ]
 
@@ -80,6 +82,7 @@ class Capsule(models.Model):
     image_editor = models.ManyToManyField(UserProfile, blank=True, related_name='image_editor_user')
     isPaid = models.BooleanField(default=False)
     notificationsent = models.BooleanField(null=True, default=False)
+
 
     def __str__(self):
         return self.capsule_name
