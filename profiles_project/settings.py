@@ -21,11 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 's(^ac6+$keq1jp46z-bdx6q%2j_wncz!=x_p9az3xjta9hw&m-'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', '.herokussl.com', '*.herokussl.com', '*.herokuapp.com', '.yourtimecapsule.live']
+ALLOWED_HOSTS = [
 
 # Application definition
 
@@ -92,27 +89,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'profiles_project.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'capsule',
-        'USER': 'postgres',
-        'PASSWORD': '1337113371zZ',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-'''
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'capsules',
-        'USER': 'djalilcapsule',
-        'PASSWORD': '1337113371gH',
-        'HOST': 'database-1.cjfxe7mosmma.eu-north-1.rds.amazonaws.com',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '5432',
     }
 }
@@ -220,13 +205,13 @@ DEFAULT_FROM_EMAIL = 'noreply@yourtimecapsule.live'
 EMAIL_HOST = 'smtp.eu.mailgun.org'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'postmaster@mg.yourtimecapsule.live'
-EMAIL_HOST_PASSWORD = 'f2eeecb547031b8704b7beaf137cf6b0-07e45e2a-57c71a95'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
 
 
-AWS_ACCESS_KEY_ID = 'AKIARJQ6CH3VJQGKZG7H'
-AWS_SECRET_ACCESS_KEY = 'Hnq5nKV/jz0rtBp7T6QAyZmzn4lBk12DtZfaBZLJ'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 AWS_STORAGE_BUCKET_NAME = 'yourtimecapsule'
 AWS_S3_REGION_NAME = 'eu-north-1'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
@@ -246,7 +231,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
             "PLATFORM": "APNS",
             'HOST': 'api.sandbox.push.apple.com',
             "CERTIFICATE": "PushCertificate.pem",
-            "TOPIC": 'com.khdenis.TimeCapsule',
+            "TOPIC": '',
                 },
   }
 
